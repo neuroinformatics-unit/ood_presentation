@@ -1,7 +1,7 @@
 ---
-title: A template presentation
-subtitle: so much fun
-author: SWC Neuroinformatics Unit
+title: Progresses on Open OnDemand (OOD)
+subtitle: And how to use it
+author: Laura Porta
 execute: 
   enabled: true
 format:
@@ -39,73 +39,327 @@ format:
           margin-left: 0
         embed-resources: true
         page-layout: full
-my-custom-stuff:
-   my-reuseable-variable: "I can use this wherever I want in the markdown, and change it in only once place :)"
 ---
 
-## Contents
+## What is Open OnDemand (OOD)
+>Access your organisation’s supercomputers through the web to compute from anywhere, on any device.
 
-Some example slides - [also look at example RevealJS slides in the Quarto docs](https://quarto.org/docs/presentations/revealjs/)
-
-* Non-executable and executable code-blocks
-* bullet points with highlighting 
-* two-column slides 
-* how to include a slide from a separate MD file
-* preview and link to a webpage
-
-## Just a code block, nothing gets executed...
-
-... but there is some fancy highlighting
-
-```{.python code-line-numbers="1|3|4-9"}
-from pathlib import Path
-
-home_path = Path.home()
-if home_path.exists():
-  data_path = home_path / "data"
-else:
-  pass
-  # raise some error maybe?
-```
-
-## A code block that's actually executed at render-time
-
-```{python}
-#| echo: true
-#| code-fold: true
-
-from pathlib import Path
-
-print("Hello world")
-```
-
-## You can execute code without showing that you have by using #|echo: false
-```{python}
-#| echo: false
-
-from pathlib import Path
-
-print("Hello world")
-```
-
-{{< include slides/extra_slide.qmd >}}
-
-## An example image
-
-Include an image:
-
-![](img/bg_logo_wide.png){width=900 fig-align=center}
-
-
-## Link and a preview a webpage:
+It has been installed on our HPC. The basic functionality is already available to all users.
 
 ::: {style="text-align: center; margin-top: 1em"}
-[interoperable Python-based tools for computational neuroanatomy](https://brainglobe.info/index.html){preview-link="true" style="text-align: center"}
+[Their website](https://openondemand.org/){style="text-align: center"}
 :::
 
-## Use a variable several times
+## What can you do with it
+Run application and request the computing resources you want to use with a web form.  
+It is like having an UI for what you are used to do in the terminal.
 
-Variables defined in the metadata is re-useable anywhere
+Requires connection to the vpn and autentication.  
 
-* {{< meta my-custom-stuff.my-reuseable-variable >}}
-* {{< meta my-custom-stuff.my-reuseable-variable >}}
+::: {style="text-align: center; margin-top: 1em"}
+[Our OOD](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/){style="text-align: center"}
+:::
+
+## HPC shell
+As the one you would have with SSH, logged in `hpc-gw1`  
+Issues:  
+
+- has a small UI bug (asked Alex to fix it)
+
+::: {style="text-align: center; margin-top: 1em"}
+[Shell access](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/shell/ssh/hpc-gw1.hpc.swc.ucl.ac.uk){style="text-align: center"}
+:::
+
+## Job composer
+A UI to launch your `sbatch` scripts.  
+You can also create them from a template.  
+It is nice for those that are used for launching `sbatch` jobs.  
+
+::: {style="text-align: center; margin-top: 1em"}
+[Job composer](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/myjobs){style="text-align: center"}
+:::
+
+Demo: start a batch job.
+
+## Job monitor
+You can monitor your active jobs / kill them / see those that you have launched
+
+::: {style="text-align: center; margin-top: 1em"}
+[Active jobs](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/activejobs){style="text-align: center"}
+:::
+
+## HPC Desktop
+You can choose which partition you want to use and how many nodes. 
+
+It is nice because you can:  
+
+- navigate your home directory
+- run python applications
+- launch Napari 
+
+::: {style="text-align: center; margin-top: 1em"}
+[SWC HPC Desktop](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/batch_connect/sys/bc_desktop/SWC_HPC/session_contexts/new){style="text-align: center"}
+:::
+
+## Current limitations
+1. form allows you to choose the number of nodes but not cores 
+2. it is still a bit hacky, it is not a one-button solution
+	- sourcing modules
+	- mounting ceph directories
+3. The browser fails / there is no chrome 
+
+## Possible fixes
+1. Adapt the form to be able to choose the number of cores (asked Alex)
+2. If we want to do a Napari or Brainglobe version we can edit the scripts in order to load the modules in the background. (The Brainglobe module needs to be updated). This will require the development of a new desktop app
+3. Create a Chrome module to run web apps from the desktop (could be a good hack for Dash Apps)
+
+## Apps
+Which apps can be installed?  
+
+- MATLAB   
+- Jupyter Notebook   
+- Jupyter Lab  
+- VS code  
+- Shiny  
+
+::: {style="text-align: center; margin-top: 1em"}
+[See more...](https://openondemand.org/run-open-ondemand){style="text-align: center"}
+:::
+
+## Adding new apps
+- fork existing apps from OOD GitHub repo or 
+- create your own from scratch
+
+They have to be tested in a sandbox environment. You have to be authorised as a developer. 
+Currently authorised devs:
+- Laura
+- Adam
+- Alex 
+
+::: {style="text-align: center; margin-top: 1em"}
+[My sandbox apps](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/admin/dev/products){style="text-align: center"}
+:::
+
+## Where do apps live?
+Access these folders from `hpc-gw1`  
+Deployed apps live in `/var/www/ood/apps/sys/`  
+Sandbox apps live in `/var/www/ood/apps/dev/lporta/gateway`  
+
+::: {style="text-align: center; margin-top: 1em"}
+[Files browser](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/files/fs//var/www/ood/apps){style="text-align: center"}
+:::
+
+## How does an app work?
+```{mermaid}
+flowchart TB 
+	A[Choose your app] --> B[Set the parameters]
+	B[Set the parameters] --> C[Launch Job]
+	C[Launch Job] --> D[Run App]
+```
+
+::: {style="text-align: center; margin-top: 1em"}
+[The desktop app is an example](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/batch_connect/sys/bc_desktop/SWC_HPC/session_contexts/new){style="text-align: center"}
+:::
+
+## Behind the scenes
+An app is executed thanks to set of `.yml` and `.sh` files:
+
+- form.yml
+- submit.yml
+- before.sh
+- script.sh
+- after.sh
+
+## Behind the scenes
+```{mermaid}
+flowchart TB 
+	A([User chooses an app]) --> B[with form.yml the form is displayed]
+    B[with form.yml the form is displayed] --> C[A context object is created] 
+    C[A context object is created] --> D[User launches the job]
+    D[User launches the job] --> E[submit.yml sets up the slurm job] 
+    E[submit.yml sets up the slurm job]  --> F[before.sh script.sh after.sh are executed]
+    F[before.sh script.sh after.sh are executed] --> G[Run App]
+```
+
+## Ruby handles the context object
+These files can be dynamically changed based on user input on the form via Ruby On Rails syntax.
+```ruby
+module load <%= context.modules %>
+```
+
+But the extension of the files has to change:  
+`script.sh` -> `scipt.sh.erb`  
+
+`.erb` is the ruby file extension.  
+
+## Let's open the desktop app folder
+
+::: {style="text-align: center; margin-top: 1em"}
+[Desktop app folder](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/files/fs//var/www/ood/apps/sys/bc_desktop){style="text-align: center"}
+:::
+
+
+## It is actually more complicated
+::: {style="text-align: center; margin-top: 1em"}
+[See the architecture page on Open OnDemand docs](https://osc.github.io/ood-documentation/latest/architecture.html){style="text-align: center"}
+:::
+
+Autentication seems to be handled by some app server.  
+To install apps like Jupyter it is not necessary to think about it.  
+All we need is to edit the bash / yaml files.
+
+## Jupyter Notebok / Jupyter Lab
+Works in my sandbox! I forked from the OOD GitHub repo and adapted it to work on our cluster. 
+
+::: {style="text-align: center; margin-top: 1em"}
+[Launch Jupyter from my sandbox](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/batch_connect/dev/jupyter/session_contexts/new){style="text-align: center"}
+:::
+
+## Environment
+Behind the scenes `cuda` and `miniconda` modules are loaded.  
+Requires a local conda environment in which Jupyter is installed.   
+Cannot switch environment once you launch Jupyter.
+
+## Debugging
+The interactive session card points us to the temporary folder in which logs are stored.
+
+::: {style="text-align: center; margin-top: 1em"}
+[My interactive sessions](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/batch_connect/sessions){style="text-align: center"}
+:::
+
+## Jupyter dev folder
+::: {style="text-align: center; margin-top: 1em"}
+[See the files](https://hpc-gw1.hpc.swc.ucl.ac.uk/pun/sys/dashboard/files/fs/var/www/ood/apps/dev/lporta/gateway/jupyter
+){style="text-align: center"}
+:::
+
+## form.yml
+>The configuration file `form.yml` creates the html form your customers will use to start the interactive application.
+
+Builds the context object & the arguments for slurm.
+
+## form.yml
+Specifies:
+
+- the name of the cluster (`cluster: "SWC"`)
+- the objects in the form (`form:`)
+	- text boxes / radio buttons / etc
+	- some of them are known by OOD and map directly to slurm arguments (e.g. `bc_queue` -> partition `-p`)
+	- we can also invent our own but we have to handle the logic in `submit.yml.erb`
+  
+## form.yml
+
+- attributes of the objects (`attributes:`)
+	- we can set a default parameter in order (`modules: "miniconda"`). In this way the field "modules" will not show up in the form. 
+	- we can define min, max values, descriptions, etc...
+
+## `form.yml` for Jupyter
+```YAML
+---
+cluster: "SWC"
+form:
+  - modules
+  - environment
+  - extra_jupyter_args
+  - bc_num_hours
+  - bc_num_slots
+  - bc_queue
+  - use_gpu
+  - num_gpu
+attributes:
+  modules: "miniconda"
+  environment:
+    help: "Specify your local conda environment, must have Jupyter installed"
+  bc_num_slots:
+    label: "Number of CPU cores"
+    value: 1
+    min: 1
+    max: 28
+    help: "Maximum is 28"
+  bc_queue:
+    help: "Choose among: cpu, gpu, medium, fast"
+  use_gpu:
+    label: "Do you want to use GPUs?"
+    widget: check_box
+    checked_value: 1
+    unchecked_value: 0
+  num_gpu:
+    label: "Number of GPU cores"
+```
+
+## `submit.yml.erb`
+>The configuration file `submit.yml.erb` controls the content of the batch script as well as the submission arguments used when submitting the batch job. It is located in the root of the application directory.
+
+In `script:native:` we can better define the arguments for `sbatch`.
+
+## `submit.yml.erb` for Jupyter
+```ruby
+<%-
+  slurm_args = if use_gpu.to_i == 1
+                 ["--gres", "gpu:" + num_gpu ]
+               else
+                 []
+               end
+-%>
+---
+batch_connect:
+  template: "vnc"
+  cluster: SWC
+script:
+  native:
+    <%- slurm_args.each do |arg| %>
+      - "<%= arg %>"
+    <%- end %>
+```
+
+## `script.sh.erb`
+It is the actual bash script that is execute to launch the app.
+In there you load the module, you activate your environment and launch Jupyter.
+
+## `script.yml.erb` for Jupyter
+```ruby
+#!/usr/bin/env bash
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+# Set working directory to home directory
+cd "${HOME}"
+
+# Start Jupyter Notebook Server
+<%- unless context.modules.blank? -%>
+
+# Purge the module environment to avoid conflicts
+module purge
+
+# Load the require modules
+module load <%= context.modules %>
+<%- end -%>
+
+# Loading cuda as well
+module load cuda
+
+# Activate the environment
+conda activate <%= context.environment %>
+
+  
+# Benchmark info
+echo "TIMING - Starting jupyter at: $(date)"
+
+# Launch the Jupyter Notebook Server
+set -x
+
+jupyter notebook --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
+```
+
+## What is left to do before deployment of Jupyter?
+- Form improvements (usage of RAM, GPU)
+- Any suggestions?
+
+## Open questions
+
+My total time investment so far: ~1.5 weeks.  
+Should I stop working on this after Jupyter is deployed?
+
+Deployment of Dash-Plotly apps seems hard becasue the authentication should be handled by a custom app server.
+Maybe we can work around it with the desktop app and Chrome module.
+
