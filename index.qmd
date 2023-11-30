@@ -102,16 +102,14 @@ It is nice because you can:
 :::
 
 ## Current limitations
-1. form allows you to choose the number of nodes but not cores 
-2. it is still a bit hacky, it is not a one-button solution
+1. it is still a bit hacky, it is not a one-button solution
 	- sourcing modules
 	- mounting ceph directories
-3. The browser fails / there is no chrome 
+2. The browser fails / there is no chrome 
 
 ## Possible fixes
-1. Adapt the form to be able to choose the number of cores (asked Alex)
-2. If we want to do a Napari or Brainglobe version we can edit the scripts in order to load the modules in the background. (The Brainglobe module needs to be updated). This will require the development of a new desktop app
-3. Create a Chrome module to run web apps from the desktop (could be a good hack for Dash Apps)
+1. If we want to do a Napari or Brainglobe version we can edit the scripts in order to load the modules in the background. (The Brainglobe module needs to be updated). This will require the development of a new desktop app
+2. Create a Chrome module to run web apps from the desktop (could be a good hack for Dash Apps)
 
 ## Apps
 Which apps can be installed?  
@@ -245,6 +243,7 @@ Specifies:
 - the objects in the form (`form:`)
 	- text boxes / radio buttons / etc
 	- some of them are known by OOD and map directly to slurm arguments (e.g. `bc_queue` -> partition `-p`)
+	- they are stored in `/var/www/ood/apps/sys/dashboard/lib/smart_attributes/attributes/`
 	- we can also invent our own but we have to handle the logic in `submit.yml.erb`
   
 ## form.yml
